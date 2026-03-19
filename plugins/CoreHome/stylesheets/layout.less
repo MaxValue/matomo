@@ -163,7 +163,7 @@ nav {
     .layoutWithSidebar--hasSidebar {
       display: flex;
       flex-direction: row;
-      align-items: flex-start;
+      align-items: stretch;
 
       #secondNavBar {
         flex: 0 0 224px;
@@ -231,7 +231,8 @@ nav {
 
   #secondNavBar {
     width: 224px;
-    height: fit-content;
+    min-height: 100vh;
+    height: auto;
     flex: none;
     background-color: @theme-color-menu-contrast-background;
     box-shadow: none !important;
@@ -270,12 +271,16 @@ nav {
           align-items: center;
           .font-default(14px, 20px);
           color: @left-menu-item-color;
-
-          &:focus, &:hover {
-            border-radius: 8px;
+          border-radius: 8px;
+          cursor: pointer;
+          text-decoration: none;
+          &:hover, &:focus {
+            outline: 0;
           }
-          &:focus {
-            outline: 2px solid;
+          &:focus-visible {
+            color: @left-menu-item-color;
+            background-color: @theme-color-background-base;
+            outline: 1px solid @left-menu-item-hover-text-color;
           }
           &:hover {
             background-color: @theme-color-background-base;
@@ -318,17 +323,13 @@ nav {
         }
 
         > .item {
-          cursor: default;
           font-weight: 600;
-          &:hover, &:focus {
-            text-decoration: none;
-          }
         }
 
-        //Selects the subcategory of the menu item
+        //Selects the submenu of the menu item
         > ul {
           position: relative;
-
+          // Submenu element
           li {
             position: relative;
             width: 100%;
@@ -336,20 +337,14 @@ nav {
             margin-right: auto;
             .item {
               .font-default(13px, 16px);
-              text-decoration: none;
-              transition: background-color 200ms linear;
               padding: 10px 22px 10px 36px;
-              &:focus {
-                text-decoration: none;
-                color: @theme-color-menu-contrast-textActive;
-                background-color: @theme-color-background-base;
-                border-radius: 8px;
-              }
+              height: 36px;
+              width: 98%;
             }
             &.active {
               > .menuDropdown,
               > .item {
-                color: @left-menu-item-hover;
+                color: @left-menu-item-hover-text-color;
                 background-color: @theme-color-background-base;
                 text-decoration: none;
                 border-radius: 8px;
@@ -367,9 +362,9 @@ nav {
       }
       li.active, li:hover {
         >.item {
-          color: @left-menu-item-hover;
+          color: @left-menu-item-hover-text-color;
           .menu-icon {
-            color: @left-menu-item-hover;
+            color: @left-menu-item-hover-text-color;
           }
         }
       }
@@ -386,6 +381,9 @@ nav {
 
           .search {
             margin: 15px 16px 10px 17px;
+            input {
+              font-size: 14px;
+            }
           }
 
           .item {
@@ -407,7 +405,7 @@ nav {
           justify-content: space-between;
 
           &:hover, &:focus {
-            color: @left-menu-item-hover;
+            color: @left-menu-item-hover-text-color;
           }
 
           &:after {
@@ -440,15 +438,8 @@ nav {
     }
 
     &.Menu--admin .navbar > li {
-      > .item {
-        padding: 14px 21px 6px 19px;
-      }
       .item .icon-arrow-right:before {
         content: "\e63b";
-      }
-      .menu-icon {
-        padding-right: 13px;
-        display: inline;
       }
     }
 
