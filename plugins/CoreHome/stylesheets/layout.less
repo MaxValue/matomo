@@ -235,14 +235,17 @@ nav {
     flex: none;
     background-color: @theme-color-menu-contrast-background;
     box-shadow: none !important;
+    padding: 16px 16px;
 
     .navbar {
       padding-top: 16px;
       padding-bottom: 20px;
 
       .menu-icon {
-        padding-right: 13px;
+        padding-right: 8px;
         display: inline;
+        font-size: 16px;
+        color: @left-menu-item-icon-color;
       }
 
       .reporting-menu-sub-icon {
@@ -259,15 +262,24 @@ nav {
 
         .item {
           width: 100%;
-          padding: 12px 21px 12px 19px;
+          height: 42px;
+          padding: 8px 12px;
           word-wrap: break-word;
           word-break: break-word;
-        }
+          display: flex;
+          align-items: center;
+          .font-default(14px, 20px);
+          color: @left-menu-item-color;
 
-        .item,.item-help-icon {
-          display: inline-block;
-          .font-default(13px, 21px);
-          color: @theme-color-menu-contrast-text;
+          &:focus, &:hover {
+            border-radius: 8px;
+          }
+          &:focus {
+            outline: 2px solid;
+          }
+          &:hover {
+            background-color: @theme-color-background-base;
+          }
         }
 
         .item-help-icon {
@@ -277,19 +289,19 @@ nav {
           right: 21px;
           top: 0;
           line-height: 13px;
-          padding-left: 16px;
-          padding-right: 16px;
           height: calc(100%);
+          align-items: center;
+          justify-content: center;
 
           > span {
             position: relative;
-            top: 12px;
+            top: auto;
           }
         }
 
         &.menuTab li:hover {
           .item-help-icon:not(.active) {
-            display:inline-block;
+            display:inline-flex;
             color: @color-black-matomo;
 
             &:hover {
@@ -300,44 +312,64 @@ nav {
         }
 
         .item-help-icon.active {
-          display: inline-block;
+          display: inline-flex;
           color: @theme-color-help-background-color;
           opacity: 0.75;
         }
 
         > .item {
           cursor: default;
-          font-weight: bold;
+          font-weight: 600;
           &:hover, &:focus {
             text-decoration: none;
           }
         }
 
+        //Selects the subcategory of the menu item
         > ul {
           position: relative;
 
           li {
             position: relative;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
             .item {
               .font-default(13px, 16px);
-              padding: 11px 22px 11px 45px;
               text-decoration: none;
               transition: background-color 200ms linear;
-              &:hover, &:focus {
+              padding: 10px 22px 10px 36px;
+              &:focus {
                 text-decoration: none;
                 color: @theme-color-menu-contrast-textActive;
                 background-color: @theme-color-background-base;
+                border-radius: 8px;
               }
             }
-
             &.active {
               > .menuDropdown,
               > .item {
-                color: @theme-color-menu-contrast-textSelected;
+                color: @left-menu-item-hover;
                 background-color: @theme-color-background-base;
                 text-decoration: none;
+                border-radius: 8px;
               }
             }
+          }
+          li:hover{
+            background-color: @theme-color-background-base;
+            border-radius: 8px;
+            .item {
+              border-radius: 8px;
+            }
+          }
+        }
+      }
+      li.active, li:hover {
+        >.item {
+          color: @left-menu-item-hover;
+          .menu-icon {
+            color: @left-menu-item-hover;
           }
         }
       }
@@ -350,8 +382,7 @@ nav {
         width: 100%;
 
         .items {
-          width: 224px;
-          box-shadow: 0 1px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+          border-radius: 8px;
 
           .search {
             margin: 15px 16px 10px 17px;
@@ -365,16 +396,18 @@ nav {
         }
 
         .title {
-          color: @theme-color-menu-contrast-text;
-          display: block;
-          padding: 15px 22px 11px 45px;
+          color: @left-menu-item-color;
+          padding: 10px 10px 10px 36px;
           font-size: 13px;
           font-weight: normal;
           word-wrap: break-word;
           word-break: break-all;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
 
           &:hover, &:focus {
-            color: @theme-color-menu-contrast-textActive;
+            color: @left-menu-item-hover;
           }
 
           &:after {
@@ -395,14 +428,6 @@ nav {
           display: block;
         }
       }
-
-      > .item {
-        cursor: pointer;
-        &:hover, &:focus {
-          color: @theme-color-menu-contrast-textActive;
-        }
-      }
-
       &.active {
         ul {
           display: block;
@@ -430,6 +455,7 @@ nav {
     .collapsible {
       margin: 0;
       border: 0;
+      box-shadow: none;
     }
 
     .collapsible-header {
@@ -448,9 +474,6 @@ nav {
   }
 
   .quick-access {
-    margin-left: 10px;
-    margin-top: 10px;
-
     @media screen and (max-width: 600px){
       z-index: 1000;
       position: absolute;
