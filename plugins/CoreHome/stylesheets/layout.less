@@ -167,6 +167,9 @@ nav {
 
       #secondNavBar {
         flex: 0 0 224px;
+        background-color: @theme-color-menu-contrast-background;
+        box-shadow: none !important;
+        padding: 16px 16px;
       }
 
       .layoutWithSidebarContent {
@@ -183,6 +186,24 @@ nav {
   @media all and (max-width: 992px) {
     #secondNavBar {
       width: 0 !important;
+      .quick-access {
+        display: none;
+      }
+
+      &.mobileLeftMenuOpen {
+        width: auto !important;
+
+        > .quick-access {
+          margin-left: 16px;
+          display: block;
+          z-index: 1000;
+          position: fixed;
+          top: 15px;
+        }
+        .sidenav > .no-padding:first-child {
+          padding-top: 65px !important;
+        }
+      }
     }
 
     .pageWrap {
@@ -208,36 +229,13 @@ nav {
 
         display: block;
       }
-
-      .quick-access {
-        width: auto !important;
-
-        input {
-          padding-left: 15px !important;
-        }
-
-        .icon-search {
-          position: absolute;
-          left: unset;
-          right: 36px;
-        }
-      }
     }
   }
-
   #ajaxLoadingDiv {
     margin-bottom: 10px;
   }
 
   #secondNavBar {
-    width: 224px;
-    min-height: 100vh;
-    height: auto;
-    flex: none;
-    background-color: @theme-color-menu-contrast-background;
-    box-shadow: none !important;
-    padding: 16px 16px;
-
     .navbar {
       padding-top: 16px;
       padding-bottom: 20px;
@@ -463,21 +461,18 @@ nav {
       padding: 0;
     }
   }
-
-  .quick-access {
-    @media screen and (max-width: 600px){
-      z-index: 1000;
-      position: absolute;
-      width: 208px;
-      margin-left: 16px;
-    }
-  }
-
   .top_controls {
     visibility: hidden;
     opacity: 0;
-    padding-left: 16px;
+    padding-left: 18px;
 
+    .quickAccessPlaceholder {
+      width: 0;
+      visibility: hidden;
+      display: inline-block;
+      position: relative;
+      margin: 0;
+    }
     @media screen and (max-width: 600px){
       visibility: hidden;
       opacity: 0;
