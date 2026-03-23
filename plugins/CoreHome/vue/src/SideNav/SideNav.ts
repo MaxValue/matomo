@@ -52,7 +52,7 @@ export default {
             onOpenStart: () => {
               setSecondNavBarMenuState(true);
             },
-            onCloseEnd: () => {
+            onCloseStart: () => {
               setSecondNavBarMenuState(false);
             },
           });

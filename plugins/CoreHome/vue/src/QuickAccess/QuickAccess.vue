@@ -16,7 +16,7 @@
       @mouseenter="searchActive = true"
     />
     <input
-      class="s quickAccessInput"
+      class="quickAccessInput"
       @keydown="onKeypress($event)"
       @focus="searchActive = true"
       v-model="searchTerm"
