@@ -9,14 +9,17 @@
 
 namespace Piwik\Plugins\Widgetize;
 
+use Piwik\Category\CategoryList;
 use Piwik\API\Request;
 use Piwik\Request\AuthenticationToken;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\FrontController;
 use Piwik\Piwik;
+use Piwik\Plugins\API\WidgetMetadata;
 use Piwik\Url;
 use Piwik\View;
+use Piwik\Widget\WidgetsList;
 
 class Controller extends \Piwik\Plugin\Controller
 {
@@ -85,8 +88,37 @@ class Controller extends \Piwik\Plugin\Controller
 
         $this->setGeneralVariablesView($view);
         $view->setXFrameOptions('allow');
-        $view->content = FrontController::getInstance()->fetchDispatch($controllerName, $actionName);
+
+        $clientWidget = $this->findClientWidgetMetadata($controllerName, $actionName);
+        if (!empty($clientWidget)) {
+            $widgetView = new View('@Widgetize/clientWidget');
+            $widgetView->widget = $clientWidget;
+            $view->content = $widgetView->render();
+        } else {
+            $view->content = FrontController::getInstance()->fetchDispatch($controllerName, $actionName);
+        }
 
         return $view->render();
+    }
+
+    private function findClientWidgetMetadata(string $module, string $action): ?array
+    {
+        $widgetsList = WidgetsList::get();
+        $categoryList = CategoryList::get();
+        $metadata = new WidgetMetadata();
+
+        foreach ($metadata->getWidgetMetadata($categoryList, $widgetsList) as $widget) {
+            if ($widget['module'] !== $module || $widget['action'] !== $action) {
+                continue;
+            }
+
+            if (empty($widget['clientComponent'])) {
+                return null;
+            }
+
+            return $widget;
+        }
+
+        return null;
     }
 }
